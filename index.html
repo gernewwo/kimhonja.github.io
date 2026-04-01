@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>닷피처 | 취향의 온점 하나, 그리고 행복의 도피처</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --yellow: #FFD600;
+      --black: #111111;
+      --white: #FFFFFF;
+      --gray-light: #f7f7f7;
+      --gray-text: #888;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Pretendard', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid #e8e8e8;
+      padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo { font-size: 1.3rem; font-weight: 900; letter-spacing: -0.5px; color: var(--black); text-decoration: none; }
+    .nav-logo span { color: var(--yellow); }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { font-size: 0.82rem; font-weight: 700; color: var(--gray-text); text-decoration: none; letter-spacing: 0.03em; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--black); }
+    .nav-subscribe { background: var(--black) !important; color: var(--yellow) !important; padding: 8px 18px; font-size: 0.78rem !important; }
+
+    /* HERO */
+    .hero { padding: 80px 40px 60px; border-bottom: 1px solid #e8e8e8; }
+    .hero-issue {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em;
+      color: var(--gray-text); text-transform: uppercase;
+      margin-bottom: 28px; display: flex; align-items: center; gap: 10px;
+    }
+    .hero-issue::before { content: ''; display: inline-block; width: 24px; height: 2px; background: var(--yellow); }
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 7.5rem);
+      font-weight: 900; line-height: 1.0;
+      letter-spacing: -0.03em; word-break: keep-all; max-width: 900px;
+    }
+    .hero-title .accent { color: var(--yellow); background: var(--black); padding: 0 8px; }
+    .hero-bottom { margin-top: 48px; display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
+    .hero-desc { font-size: 1rem; line-height: 1.8; color: var(--gray-text); max-width: 420px; word-break: keep-all; }
+    .hero-form { display: flex; border: 2px solid var(--black); flex-shrink: 0; }
+    .hero-form input {
+      border: none; outline: none; padding: 13px 18px;
+      font-family: 'Pretendard', sans-serif; font-size: 0.88rem; width: 230px;
+    }
+    .hero-form button {
+      background: var(--black); color: var(--yellow); border: none;
+      padding: 13px 22px; font-family: 'Pretendard', sans-serif;
+      font-weight: 900; font-size: 0.82rem; letter-spacing: 0.04em;
+      cursor: pointer; white-space: nowrap; transition: opacity 0.15s;
+    }
+    .hero-form button:hover { opacity: 0.82; }
+    .hero-note { font-size: 0.75rem; color: #bbb; margin-top: 8px; }
+    .success-msg { display: none; font-size: 0.82rem; font-weight: 700; margin-top: 8px; }
+    .success-msg.show { display: block; }
+
+    /* FEATURED */
+    .featured { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #e8e8e8; }
+    .featured-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; background: var(--gray-light); border-right: 1px solid #e8e8e8; display: block; }
+    .featured-body { padding: 52px 48px; display: flex; flex-direction: column; justify-content: space-between; }
+    .featured-tag { display: inline-block; background: var(--yellow); color: var(--black); font-size: 0.68rem; font-weight: 900; letter-spacing: 0.15em; padding: 4px 10px; margin-bottom: 20px; align-self: flex-start; }
+    .featured-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; line-height: 1.25; letter-spacing: -0.02em; word-break: keep-all; flex: 1; }
+    .featured-desc { font-size: 0.92rem; line-height: 1.75; color: var(--gray-text); margin-top: 20px; word-break: keep-all; }
+    .featured-meta { margin-top: 32px; display: flex; align-items: center; justify-content: space-between; }
+    .featured-score { font-size: 0.85rem; font-weight: 900; letter-spacing: 2px; }
+    .featured-link { font-size: 0.8rem; font-weight: 900; color: var(--black); text-decoration: none; border-bottom: 2px solid var(--yellow); padding-bottom: 2px; transition: opacity 0.15s; }
+    .featured-link:hover { opacity: 0.6; }
+
+    /* CARD GRID */
+    .section-label { padding: 32px 40px 0; font-size: 0.7rem; font-weight: 900; letter-spacing: 0.2em; color: #ccc; text-transform: uppercase; }
+    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid #e8e8e8; margin-top: 20px; }
+    .card-item { border-right: 1px solid #e8e8e8; padding: 32px 40px 36px; text-decoration: none; color: var(--black); display: block; transition: background 0.15s; }
+    .card-item:last-child { border-right: none; }
+    .card-item:hover { background: var(--gray-light); }
+    .card-thumb { width: 100%; aspect-ratio: 16/10; object-fit: cover; background: var(--gray-light); margin-bottom: 20px; display: block; }
+    .card-tag { display: inline-block; font-size: 0.65rem; font-weight: 900; letter-spacing: 0.14em; color: var(--gray-text); text-transform: uppercase; margin-bottom: 8px; }
+    .card-title { font-size: 1.05rem; font-weight: 900; line-height: 1.45; letter-spacing: -0.01em; word-break: keep-all; }
+    .card-score { margin-top: 14px; font-size: 0.82rem; font-weight: 900; letter-spacing: 2px; }
+    .card-date { margin-top: 10px; font-size: 0.75rem; color: #bbb; }
+
+    /* ARCHIVE BANNER */
+    .archive-row { border-top: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; padding: 40px; display: flex; align-items: center; justify-content: space-between; }
+    .archive-row p { font-size: 1.1rem; font-weight: 700; }
+    .archive-row span { font-size: 0.85rem; color: var(--gray-text); margin-top: 4px; display: block; }
+    .archive-btn { background: var(--black); color: var(--yellow); font-weight: 900; font-size: 0.82rem; padding: 12px 28px; text-decoration: none; letter-spacing: 0.06em; flex-shrink: 0; transition: opacity 0.15s; }
+    .archive-btn:hover { opacity: 0.8; }
+
+    /* FOOTER */
+    footer { background: var(--black); color: rgba(255,255,255,0.35); padding: 48px 40px; display: flex; align-items: flex-start; justify-content: space-between; font-size: 0.82rem; line-height: 1.9; }
+    .footer-logo { font-size: 1.1rem; font-weight: 900; color: var(--yellow); margin-bottom: 6px; }
+    footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+    footer a:hover { color: var(--yellow); }
+    .footer-links { display: flex; flex-direction: column; gap: 4px; text-align: right; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .hero { padding: 48px 24px 40px; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; }
+      .hero-form { width: 100%; }
+      .hero-form input { flex: 1; width: auto; }
+      .featured { grid-template-columns: 1fr; }
+      .featured-img { border-right: none; border-bottom: 1px solid #e8e8e8; }
+      .featured-body { padding: 32px 24px; }
+      .section-label { padding: 24px 24px 0; }
+      .card-grid { grid-template-columns: 1fr; }
+      .card-item { border-right: none; border-bottom: 1px solid #e8e8e8; padding: 28px 24px; }
+      .archive-row { flex-direction: column; gap: 20px; padding: 32px 24px; }
+      footer { flex-direction: column; gap: 24px; padding: 40px 24px; }
+      .footer-links { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dot<span>.</span>Feature</a>
+  <div class="nav-links">
+    <a href="archive.html">아카이브</a>
+    <a href="#subscribe" class="nav-subscribe">구독하기</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="subscribe">
+  <!-- ✏️ 이슈 번호 -->
+  <div class="hero-issue">Weekly Newsletter · #47</div>
+
+  <!-- ✏️ 메인 카피 — 이 텍스트를 바꾸면 됩니다 -->
+  <h1 class="hero-title">
+    월화수목금<br>
+    세상이 멸망하길바래<br>
+    하지만 오늘은<span class="accent">여전히</span><br>
+    무사했으면
+  </h1>
+
+  <div class="hero-bottom">
+    <!-- ✏️ 부제 -->
+    <p class="hero-desc">
+      취향의 온점 하나, 그리고 행복의 도피처.<br>
+      매주 금요일, 에디터 김혼자와서윤화의 큐레이션이 메일함으로 옵니다.
+    </p>
+    <div>
+      <div class="hero-form">
+        <input type="email" id="heroEmail" placeholder="이메일 주소를 입력하세요">
+        <button onclick="subscribe()">무료 구독</button>
+      </div>
+      <div class="hero-note">광고 없음 · 언제든 취소 가능</div>
+      <div class="success-msg" id="successMsg">✓ 다음 월요일에 만나요 :)</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<div class="featured">
+  <!-- ✏️ 메인 이슈 이미지 URL -->
+  <div class="featured-img" style="background: url('https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=900') center/cover;"></div>
+  <div class="featured-body">
+    <div>
+      <span class="featured-tag">MOVIE</span>  <!-- ✏️ 태그 -->
+      <!-- ✏️ 메인 이슈 제목 & 설명 -->
+      <h2 class="featured-title">[시작] 스윙걸즈:<br>엇박자로 OK!</h2>
+      <p class="featured-desc">우에노 주리가 재즈 밴드부를 결성하는 이야기. 엇박자여도 괜찮으니까, 계속하면 되니까.</p>
+    </div>
+    <div class="featured-meta">
+      <span class="featured-score">●●●●○</span>  <!-- ✏️ 점수 -->
+      <a href="issue-47.html" class="featured-link">전체 읽기 →</a>
+    </div>
+  </div>
+</div>
+
+<!-- CARD GRID -->
+<div class="section-label">최근 이슈</div>
+<div class="card-grid">
+
+  <!-- ✏️ 카드 — 새 이슈마다 복사해서 추가 -->
+  <a href="issue-46.html" class="card-item">
+    <div class="card-thumb" style="background: url('https://images.unsplash.com/photo-1583241800548-3445166429b9?auto=format&fit=crop&q=80&w=600') center/cover;"></div>
+    <span class="card-tag">ITEM</span>
+    <h3 class="card-title">사회초년생을 위한 '한 끗' 지갑 큐레이션</h3>
+    <div class="card-score">●●●●●</div>
+    <div class="card-date">2025.03.31</div>
+  </a>
+
+  <a href="issue-45.html" class="card-item">
+    <div class="card-thumb" style="background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=600') center/cover;"></div>
+    <span class="card-tag">FOOD</span>
+    <h3 class="card-title">혼자 먹기 딱 좋은 서울 식당 5</h3>
+    <div class="card-score">●●●●○</div>
+    <div class="card-date">2025.03.24</div>
+  </a>
+
+  <a href="issue-44.html" class="card-item">
+    <div class="card-thumb" style="background: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=600') center/cover;"></div>
+    <span class="card-tag">TRAVEL</span>
+    <h3 class="card-title">당일치기로 충분한 경기도 여행지</h3>
+    <div class="card-score">●●●○○</div>
+    <div class="card-date">2025.03.17</div>
+  </a>
+
+</div>
+
+<!-- ARCHIVE BANNER -->
+<div class="archive-row">
+  <div>
+    <p>지난 이슈가 보고 싶다면?</p>
+    <span>지금까지 발행된 모든 닷피처를 모아뒀어요.</span>
+  </div>
+  <a href="archive.html" class="archive-btn">아카이브 보기 →</a>
+</div>
+
+<footer>
+  <div>
+    <div class="footer-logo">Dot.Feature</div>
+    <div>취향의 온점 하나, 그리고 행복의 도피처<br>
+    © 2026 닷피처 All rights reserved.<br>
+    본 뉴스레터는 경기청년 갭이어 프로그램을 통해 제작됩니다.</div>
+  </div>
+  <div class="footer-links">
+    <a href="archive.html">아카이브</a>
+    <a href="#">구독 취소</a>
+    <a href="#">문의하기</a>
+  </div>
+</footer>
+
+<script>
+function subscribe() {
+  const email = document.getElementById('heroEmail').value;
+  if (!email || !email.includes('@')) { alert('이메일 주소를 확인해주세요!'); return; }
+  document.getElementById('heroEmail').value = '';
+  document.getElementById('successMsg').classList.add('show');
+}
+document.getElementById('heroEmail').addEventListener('keypress', e => {
+  if (e.key === 'Enter') subscribe();
+});
+</script>
+</body>
+</html>
